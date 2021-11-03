@@ -14,23 +14,23 @@ import {
 import setAuthToken from "../utils/setAuthToken";
 
 //Load User
-export const loadUser = () => async (dispatch) => {
-	if (localStorage.token) {
-		setAuthToken(localStorage.token);
-	}
-	try {
-		const res = await axios.get("/api/auth");
+// export const loadUser = () => async (dispatch) => {
+// 	if (localStorage.token) {
+// 		setAuthToken(localStorage.token);
+// 	}
+// 	try {
+// 		const res = await axios.get("/api/auth");
 
-		dispatch({
-			type: USER_LOADED,
-			payload: res.data,
-		});
-	} catch (err) {
-		dispatch({
-			type: AUTH_ERROR,
-		});
-	}
-};
+// 		dispatch({
+// 			type: USER_LOADED,
+// 			payload: res.data,
+// 		});
+// 	} catch (err) {
+// 		dispatch({
+// 			type: AUTH_ERROR,
+// 		});
+// 	}
+// };
 
 // Register User
 export const register =

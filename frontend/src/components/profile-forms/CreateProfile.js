@@ -1,5 +1,5 @@
 import React, { Fragment, useState, useEffect } from "react";
-import { Link, useRouteMatch } from "react-router-dom";
+import { Link, withRouter, useRouteMatch } from "react-router-dom";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { createProfile, getCurrentProfile } from "../../actions/profile";
@@ -18,10 +18,10 @@ const initialState = {
 	instagram: "",
 };
 
-const ProfileForm = ({
-	profile: { profile, loading },
+const CreateProfile = ({
+	//profile: { profile, loading },
 	createProfile,
-	getCurrentProfile,
+	//getCurrentProfile,
 	history,
 }) => {
 	const [formData, setFormData] = useState(initialState);
@@ -234,16 +234,16 @@ const ProfileForm = ({
 	);
 };
 
-ProfileForm.propTypes = {
+CreateProfile.propTypes = {
 	createProfile: PropTypes.func.isRequired,
-	getCurrentProfile: PropTypes.func.isRequired,
-	profile: PropTypes.object.isRequired,
+	//getCurrentProfile: PropTypes.func.isRequired,
+	//profile: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = (state) => ({
 	profile: state.profile,
 });
 
-export default connect(mapStateToProps, { createProfile, getCurrentProfile })(
-	ProfileForm
+export default connect(mapStateToProps, { createProfile })(
+	withRouter(CreateProfile)
 );

@@ -66,28 +66,18 @@ export const getProfileById = (userId) => async (dispatch) => {
 	}
 };
 
-// Get Github repos
-export const getGithubRepos = (username) => async (dispatch) => {
-	try {
-		const res = await api.get(`/profile/github/${username}`);
-
-		dispatch({
-			type: GET_REPOS,
-			payload: res.data,
-		});
-	} catch (err) {
-		dispatch({
-			type: NO_REPOS,
-		});
-	}
-};
-
 // Create or update profile
 export const createProfile =
 	(formData, history, edit = false) =>
 	async (dispatch) => {
 		try {
-			const res = await api.post("/profile", formData);
+			const config = {
+				headers: {
+					"Content-Type": "application/json",
+				},
+			};
+
+			const res = await axios.post("/api/profile", formData, config);
 
 			dispatch({
 				type: GET_PROFILE,
@@ -118,7 +108,12 @@ export const createProfile =
 // Add Experience
 export const addExperience = (formData, history) => async (dispatch) => {
 	try {
-		const res = await api.put("/profile/experience", formData);
+		const config = {
+			headers: {
+				"Content-Type": "application/json",
+			},
+		};
+		const res = await axios.put("/api/profile/experience", formData);
 
 		dispatch({
 			type: UPDATE_PROFILE,
@@ -145,7 +140,12 @@ export const addExperience = (formData, history) => async (dispatch) => {
 // Add Education
 export const addEducation = (formData, history) => async (dispatch) => {
 	try {
-		const res = await api.put("/profile/education", formData);
+		const config = {
+			headers: {
+				"Content-Type": "application/json",
+			},
+		};
+		const res = await axios.put("/api/profile/education", formData);
 
 		dispatch({
 			type: UPDATE_PROFILE,
