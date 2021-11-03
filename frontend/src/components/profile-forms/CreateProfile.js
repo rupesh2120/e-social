@@ -1,22 +1,22 @@
-import React, { Fragment, useState, useEffect } from "react";
-import { Link, withRouter, useRouteMatch } from "react-router-dom";
+import React, { Fragment, useState } from "react";
+import { Link, withRouter } from "react-router-dom";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { createProfile, getCurrentProfile } from "../../actions/profile";
+import { createProfile } from "../../actions/profile";
 
-const initialState = {
-	company: "",
-	website: "",
-	location: "",
-	status: "",
-	skills: "",
-	bio: "",
-	twitter: "",
-	facebook: "",
-	linkedin: "",
-	youtube: "",
-	instagram: "",
-};
+// const initialState = {
+// 	company: "",
+// 	website: "",
+// 	location: "",
+// 	status: "",
+// 	skills: "",
+// 	bio: "",
+// 	twitter: "",
+// 	facebook: "",
+// 	linkedin: "",
+// 	youtube: "",
+// 	instagram: "",
+// };
 
 const CreateProfile = ({
 	//profile: { profile, loading },
@@ -24,27 +24,39 @@ const CreateProfile = ({
 	//getCurrentProfile,
 	history,
 }) => {
-	const [formData, setFormData] = useState(initialState);
+	const [formData, setFormData] = useState({
+		company: "",
+		website: "",
+		location: "",
+		status: "",
+		skills: "",
+		bio: "",
+		twitter: "",
+		facebook: "",
+		linkedin: "",
+		youtube: "",
+		instagram: "",
+	});
 
-	const creatingProfile = useRouteMatch("/create-profile");
+	//const creatingProfile = useRouteMatch("/create-profile");
 
 	const [displaySocialInputs, toggleSocialInputs] = useState(false);
 
-	useEffect(() => {
-		if (!profile) getCurrentProfile();
-		if (!loading && profile) {
-			const profileData = { ...initialState };
-			for (const key in profile) {
-				if (key in profileData) profileData[key] = profile[key];
-			}
-			for (const key in profile.social) {
-				if (key in profileData) profileData[key] = profile.social[key];
-			}
-			if (Array.isArray(profileData.skills))
-				profileData.skills = profileData.skills.join(", ");
-			setFormData(profileData);
-		}
-	}, [loading, getCurrentProfile, profile]);
+	// useEffect(() => {
+	// 	if (!profile) getCurrentProfile();
+	// 	if (!loading && profile) {
+	// 		const profileData = { ...initialState };
+	// 		for (const key in profile) {
+	// 			if (key in profileData) profileData[key] = profile[key];
+	// 		}
+	// 		for (const key in profile.social) {
+	// 			if (key in profileData) profileData[key] = profile.social[key];
+	// 		}
+	// 		if (Array.isArray(profileData.skills))
+	// 			profileData.skills = profileData.skills.join(", ");
+	// 		setFormData(profileData);
+	// 	}
+	// }, [loading, getCurrentProfile, profile]);
 
 	const {
 		company,
@@ -65,19 +77,20 @@ const CreateProfile = ({
 
 	const onSubmit = (e) => {
 		e.preventDefault();
-		createProfile(formData, history, profile ? true : false);
+		createProfile(formData, history);
 	};
 
 	return (
 		<Fragment>
 			<h1 className="large text-primary">
-				{creatingProfile ? "Create Your Profile" : "Edit Your Profile"}
+				{/* {creatingProfile ? "Create Your Profile" : "Edit Your Profile"} */}
 			</h1>
 			<p className="lead">
 				<i className="fas fa-user" />
-				{creatingProfile
+				Let's get some information to make your profile stand out
+				{/* {creatingProfile
 					? ` Let's get some information to make your`
-					: " Add some changes to your profile"}
+					: " Add some changes to your profile"} */}
 			</p>
 			<small>* = required field</small>
 			<form className="form" onSubmit={onSubmit}>
@@ -240,10 +253,8 @@ CreateProfile.propTypes = {
 	//profile: PropTypes.object.isRequired,
 };
 
-const mapStateToProps = (state) => ({
-	profile: state.profile,
-});
+// const mapStateToProps = (state) => ({
+// 	profile: state.profile,
+// });
 
-export default connect(mapStateToProps, { createProfile })(
-	withRouter(CreateProfile)
-);
+export default connect(null, { createProfile })(withRouter(CreateProfile));

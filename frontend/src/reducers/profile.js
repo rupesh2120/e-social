@@ -3,7 +3,7 @@ import {
 	PROFILE_ERROR,
 	CLEAR_PROFILE,
 	UPDATE_PROFILE,
-	GET_PROFILES,
+	//GET_PROFILES,
 } from "../actions/types";
 
 const initialState = {
@@ -24,12 +24,12 @@ export default function profileReducer(state = initialState, action) {
 				profile: payload,
 				loading: false,
 			};
-		case GET_PROFILES:
-			return {
-				...state,
-				profiles: payload,
-				loading: false,
-			};
+		// case GET_PROFILES:
+		// 	return {
+		// 		...state,
+		// 		profiles: payload,
+		// 		loading: false,
+		// 	};
 		case PROFILE_ERROR:
 			return {
 				...state,
