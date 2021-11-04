@@ -68,15 +68,10 @@ const EditProfile = ({
 
 	return (
 		<Fragment>
-			<h1 className="large text-primary">
-				{/* {creatingProfile ? "Create Your Profile" : "Edit Your Profile"} */}
-			</h1>
+			<h1 className="large text-primary"></h1>
 			<p className="lead">
 				<i className="fas fa-user" />
 				Let's get some information to make your profile stand out
-				{/* {creatingProfile
-					? ` Let's get some information to make your`
-					: " Add some changes to your profile"} */}
 			</p>
 			<small>* = required field</small>
 			<form className="form" onSubmit={(e) => onSubmit(e)}>

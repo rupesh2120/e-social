@@ -4,17 +4,12 @@ const config = require("config");
 const router = express.Router();
 const auth = require("../../middleware/auth");
 const { check, validationResult } = require("express-validator");
-//bring in normalize to give us a proper url, regardless of what user entered
-//const normalize = require("normalize-url");
 const checkObjectId = require("../../middleware/checkObjectId");
 
 const Profile = require("../../models/Profile");
 const User = require("../../models/User");
 const Post = require("../../models/Post");
 
-// @route    GET api/profile/me
-// @desc     Get current users profile
-// @access   Private
 router.get("/me", auth, async (req, res) => {
 	try {
 		const profile = await Profile.findOne({
@@ -32,9 +27,6 @@ router.get("/me", auth, async (req, res) => {
 	}
 });
 
-// @route    POST api/profile
-// @desc     Create or update user profile
-// @access   Private
 router.post(
 	"/",
 	auth,
@@ -61,7 +53,6 @@ router.post(
 			instagram,
 			linkedin,
 			facebook,
-			// spread the rest of the fields we don't need to check
 		} = req.body;
 
 		// build a profile
@@ -78,19 +69,6 @@ router.post(
 				: skills.split(",").map((skill) => " " + skill.trim());
 		}
 
-		// build a profile
-		// const profileFields = {
-		// 	user: req.user.id,
-		// 	website:
-		// 		website && website !== ""
-		// 			? normalize(website, { forceHttps: true })
-		// 			: "",
-		// 	skills: Array.isArray(skills)
-		// 		? skills
-		// 		: skills.split(",").map((skill) => " " + skill.trim()),
-		// 	...rest,
-		// };
-
 		// Build socialFields object
 		profileFields.social = {};
 		if (youtube) profileFields.youtube = youtube;
@@ -98,17 +76,6 @@ router.post(
 		if (facebook) profileFields.facebook = facebook;
 		if (linkedin) profileFields.linkedin = linkedin;
 		if (instagram) profileFields.instagram = instagram;
-
-		// Build socialFields object
-		//const socialFields = { youtube, twitter, instagram, linkedin, facebook };
-
-		// normalize social fields to ensure valid url
-		// for (const [key, value] of Object.entries(socialFields)) {
-		// 	if (value && value.length > 0)
-		// 		socialFields[key] = normalize(value, { forceHttps: true });
-		// }
-		// add to profileFields
-		//profileFields.social = socialFields;
 
 		try {
 			let profile = await Profile.findOne({ user: req.user.id });
@@ -129,14 +96,6 @@ router.post(
 
 			await profile.save();
 			res.json(profile);
-
-			// Using upsert option (creates new doc if no match is found):
-			// let profile = await Profile.findOneAndUpdate(
-			// 	{ user: req.user.id },
-			// 	{ $set: profileFields },
-			// 	{ new: true, upsert: true, setDefaultsOnInsert: true }
-			// );
-			// return res.json(profile);
 		} catch (err) {
 			console.error(err.message);
 			return res.status(500).send("Server Error");
@@ -144,9 +103,6 @@ router.post(
 	}
 );
 
-// @route    GET api/profile
-// @desc     Get all profiles
-// @access   Public
 router.get("/", async (req, res) => {
 	try {
 		const profiles = await Profile.find().populate("user", ["name", "avatar"]);
@@ -157,9 +113,6 @@ router.get("/", async (req, res) => {
 	}
 });
 
-// @route    GET api/profile/user/:user_id
-// @desc     Get profile by user ID
-// @access   Public
 router.get(
 	"/user/:user_id",
 	checkObjectId("user_id"),
@@ -179,9 +132,6 @@ router.get(
 	}
 );
 
-// @route    DELETE api/profile
-// @desc     Delete profile, user & posts
-// @access   Private
 router.delete("/", auth, async (req, res) => {
 	try {
 		// Remove user posts
@@ -190,11 +140,6 @@ router.delete("/", auth, async (req, res) => {
 			await Profile.findOneAndRemove({ user: req.user.id });
 		// Remove user
 		await User.findOneAndRemove({ _id: req.user.id });
-		// await Promise.all([
-		// 	Post.deleteMany({ user: req.user.id }),
-		// 	Profile.findOneAndRemove({ user: req.user.id }),
-		// 	User.findOneAndRemove({ _id: req.user.id }),
-		// ]);
 
 		res.json({ msg: "User deleted" });
 	} catch (err) {
@@ -203,9 +148,6 @@ router.delete("/", auth, async (req, res) => {
 	}
 });
 
-// @route    PUT api/profile/experience
-// @desc     Add profile experience
-// @access   Private
 router.put(
 	"/experience",
 	auth,
@@ -250,18 +192,8 @@ router.put(
 	}
 );
 
-// @route    DELETE api/profile/experience/:exp_id
-// @desc     Delete experience from profile
-// @access   Private
-
 router.delete("/experience/:exp_id", auth, async (req, res) => {
 	try {
-		// const foundProfile = await Profile.findOne({ user: req.user.id });
-
-		// foundProfile.experience = foundProfile.experience.filter(
-		// 	(exp) => exp._id.toString() !== req.params.exp_id
-		// );
-
 		const foundProfile = await Profile.findOne({ user: req.user.id });
 
 		//Get remove index
@@ -279,9 +211,6 @@ router.delete("/experience/:exp_id", auth, async (req, res) => {
 	}
 });
 
-// @route    PUT api/profile/education
-// @desc     Add profile education
-// @access   Private
 router.put(
 	"/education",
 	auth,
@@ -327,18 +256,8 @@ router.put(
 	}
 );
 
-// @route    DELETE api/profile/education/:edu_id
-// @desc     Delete education from profile
-// @access   Private
-
 router.delete("/education/:edu_id", auth, async (req, res) => {
 	try {
-		// const foundProfile = await Profile.findOne({ user: req.user.id });
-		// foundProfile.education = foundProfile.education.filter(
-		// 	(edu) => edu._id.toString() !== req.params.edu_id
-		// );
-		// await foundProfile.save();
-		// return res.status(200).json(foundProfile);
 		const foundProfile = await Profile.findOne({ user: req.user.id });
 
 		//Get remove index
@@ -355,26 +274,5 @@ router.delete("/education/:edu_id", auth, async (req, res) => {
 		return res.status(500).json({ msg: "Server error" });
 	}
 });
-
-// @route    GET api/profile/github/:username
-// @desc     Get user repos from Github
-// @access   Public
-// router.get("/github/:username", async (req, res) => {
-// 	try {
-// 		const uri = encodeURI(
-// 			`https://api.github.com/users/${req.params.username}/repos?per_page=5&sort=created:asc`
-// 		);
-// 		const headers = {
-// 			"user-agent": "node.js",
-// 			Authorization: `token ${config.get("githubToken")}`,
-// 		};
-
-// 		const gitHubResponse = await axios.get(uri, { headers });
-// 		return res.json(gitHubResponse.data);
-// 	} catch (err) {
-// 		console.error(err.message);
-// 		return res.status(404).json({ msg: "No Github profile found" });
-// 	}
-// });
 
 module.exports = router;

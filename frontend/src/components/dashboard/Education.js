@@ -3,7 +3,6 @@ import PropTypes from "prop-types";
 import Moment from "react-moment";
 import { connect } from "react-redux";
 import { deleteEducation } from "../../actions/profile";
-//import formatDate from "../../utils/formatDate";
 
 const Education = ({ education, deleteEducation }) => {
 	const educations = education.map((edu) => (
@@ -11,8 +10,6 @@ const Education = ({ education, deleteEducation }) => {
 			<td>{edu.school}</td>
 			<td className="hide-sm">{edu.degree}</td>
 			<td>
-				{/* {formatDate(edu.from)} - {edu.to ? formatDate(edu.to) : "Now"} */}
-				{/* {formatDate(exp.from)} - {exp.to ? formatDate(exp.to) : "Now"} */}
 				<Moment format="YYYY/MM/DD">{edu.from}</Moment> -{" "}
 				{edu.to === null ? (
 					"Now"

@@ -112,9 +112,6 @@ router.put("/like/:id", auth, async (req, res) => {
 		) {
 			return res.status(400).json({ msg: "Post already liked" });
 		}
-		// if (post.likes.some((like) => like.user.toString() === req.user.id)) {
-		// 	return res.status(400).json({ msg: "Post already liked" });
-		// }
 
 		post.likes.unshift({ user: req.user.id });
 
@@ -141,10 +138,6 @@ router.put("/unlike/:id", auth, checkObjectId("id"), async (req, res) => {
 		) {
 			return res.status(400).json({ msg: "Post has not been liked" });
 		}
-
-		// if (!post.likes.some((like) => like.user.toString() === req.user.id)) {
-		// 	return res.status(400).json({ msg: "Post has not yet been liked" });
-		// }
 
 		// remove the like
 		const removeIndex = post.likes
@@ -227,10 +220,6 @@ router.delete("/comment/:id/:comment_id", auth, async (req, res) => {
 			.indexOf(req.user.id);
 
 		post.comments.splice(removeIndex, 1);
-
-		// post.comments = post.comments.filter(
-		// 	({ id }) => id !== req.params.comment_id
-		// );
 
 		await post.save();
 

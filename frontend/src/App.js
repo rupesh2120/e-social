@@ -6,9 +6,6 @@ import Alert from "./components/layout/Alert";
 import Login from "./components/auth/Login";
 import Register from "./components/auth/Register";
 
-//import Routes from "./components/routing/Routes";
-//import { LOGOUT } from "./actions/types";
-
 // Redux
 import { Provider } from "react-redux";
 import store from "./store";

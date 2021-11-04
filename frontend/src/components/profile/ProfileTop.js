@@ -65,20 +65,6 @@ const ProfileTop = ({
 						<i className={"fab fa-instagram fa-2x"}></i>
 					</a>
 				)}
-				{/* {social
-					? Object.entries(social)
-							.filter(([_, value]) => value)
-							.map(([key, value]) => (
-								<a
-									key={key}
-									href={value}
-									target="_blank"
-									rel="noopener noreferrer"
-								>
-									<i className={`fab fa-${key} fa-2x`}></i>
-								</a>
-							))
-					: null} */}
 			</div>
 		</div>
 	);
