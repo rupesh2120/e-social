@@ -24,22 +24,6 @@ const Register = ({ setAlert, register, isAuthenticated }) => {
 			setAlert("Passwords do not match", "danger");
 		} else {
 			register({ name, email, password });
-			// const newUser = { name, email, password };
-			// try {
-			// 	const config = {
-			// 		headers: {
-			// 			"Content-Type": "application/json",
-			// 		},
-			// 	};
-
-			// 	const body = JSON.stringify(newUser);
-
-			// 	const res = await axios.post("/api/users", body, config);
-			// 	console.log(res.data);
-			// } catch (err) {
-			// 	console.log(err.response.data);
-			// }
-			//console.log("success");
 		}
 	};
 
@@ -53,14 +37,14 @@ const Register = ({ setAlert, register, isAuthenticated }) => {
 			<p className="lead">
 				<i className="fas fa-user"></i> Create Your Account
 			</p>
-			<form className="form" onSubmit={onSubmit}>
+			<form className="form" onSubmit={(e) => onSubmit(e)}>
 				<div className="form-group">
 					<input
 						type="text"
 						placeholder="Name"
 						name="name"
 						value={name}
-						onChange={onChange}
+						onChange={(e) => onChange(e)}
 					/>
 				</div>
 				<div className="form-group">
@@ -69,7 +53,7 @@ const Register = ({ setAlert, register, isAuthenticated }) => {
 						placeholder="Email Address"
 						name="email"
 						value={email}
-						onChange={onChange}
+						onChange={(e) => onChange(e)}
 					/>
 					<small className="form-text">
 						This site uses Gravatar so if you want a profile image, use a
@@ -82,7 +66,7 @@ const Register = ({ setAlert, register, isAuthenticated }) => {
 						placeholder="Password"
 						name="password"
 						value={password}
-						onChange={onChange}
+						onChange={(e) => onChange(e)}
 					/>
 				</div>
 				<div className="form-group">
@@ -91,13 +75,13 @@ const Register = ({ setAlert, register, isAuthenticated }) => {
 						placeholder="Confirm Password"
 						name="password2"
 						value={password2}
-						onChange={onChange}
+						onChange={(e) => onChange(e)}
 					/>
 				</div>
 				<input type="submit" className="btn btn-primary" value="Register" />
 			</form>
 			<p className="my-1">
-				Already have an account? <Link to="/register">Sign In</Link>
+				Already have an account? <Link to="/login">Sign In</Link>
 			</p>
 		</Fragment>
 	);
