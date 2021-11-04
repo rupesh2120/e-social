@@ -7,6 +7,7 @@ import {
 	LOGIN_FAIL,
 	// //LOGIN_FAIL,
 	LOGOUT,
+	ACCOUNT_DELETED,
 	// ACCOUNT_DELETED,
 } from "../actions/types";
 
@@ -41,6 +42,7 @@ export default function authReducer(state = initialState, action) {
 		case AUTH_ERROR:
 		case LOGIN_FAIL:
 		case LOGOUT:
+		case ACCOUNT_DELETED:
 			localStorage.removeItem("token");
 			return {
 				...state,
