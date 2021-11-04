@@ -60,8 +60,8 @@ router.post(
 			await newUser.save();
 
 			const payload = {
-				newUser: {
-					id: user.id,
+				user: {
+					id: newUser.id,
 				},
 			};
 
