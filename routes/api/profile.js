@@ -73,9 +73,9 @@ router.post(
 		if (bio) profileFields.bio = bio;
 		if (status) profileFields.status = status;
 		if (skills) {
-			profileFields.skills = skills
-				.split(",")
-				.map((skill) => " " + skill.trim());
+			profileFields.skills = Array.isArray(skills)
+				? skills
+				: skills.split(",").map((skill) => " " + skill.trim());
 		}
 
 		// build a profile

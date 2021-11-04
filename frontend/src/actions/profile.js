@@ -84,7 +84,9 @@ export const createProfile =
 				type: GET_PROFILE,
 				payload: res.data,
 			});
-
+			if (!edit) {
+				console.log("Inside create file");
+			}
 			dispatch(
 				setAlert(edit ? "Profile Updated" : "Profile Created", "success")
 			);

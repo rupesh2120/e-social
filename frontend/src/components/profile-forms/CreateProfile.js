@@ -4,20 +4,6 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { createProfile } from "../../actions/profile";
 
-// const initialState = {
-// 	company: "",
-// 	website: "",
-// 	location: "",
-// 	status: "",
-// 	skills: "",
-// 	bio: "",
-// 	twitter: "",
-// 	facebook: "",
-// 	linkedin: "",
-// 	youtube: "",
-// 	instagram: "",
-// };
-
 const CreateProfile = ({
 	//profile: { profile, loading },
 	createProfile,
